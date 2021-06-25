@@ -54,7 +54,7 @@
 
 <button
 	class={value >= 0 ? 'green' : 'red'}
-	on:click={(ev) => ev}
+	on:click={handleVolumeChange}
 	on:mousedown={buttonHoldStart}
 	on:touchstart={buttonHoldStart}
 	on:touchend={buttonHoldFinish}

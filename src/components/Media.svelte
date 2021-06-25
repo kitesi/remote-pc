@@ -6,7 +6,6 @@
 	export let initialData: InitialData;
 
 	import ChangeVolumeBtn from './ChangeVolumeBtn.svelte';
-	// import MouseKeyboardInterface, { openMouseKBControls } from './MouseKeyboardInterface.svelte';
 
 	import { fade } from 'svelte/transition';
 	import { volume, muted } from '../stores.js';
