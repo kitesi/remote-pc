@@ -20,8 +20,6 @@ try {
 server.listen(port, () => console.log('ready at localhost:' + port));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const allSockets = [];
-
 /**
  *
  * @param {WebSocket} currentSocket
@@ -36,15 +34,17 @@ function broadcastData(currentSocket, data) {
 }
 
 websocketServer.on('connection', async (socket) => {
-	allSockets.push(socket);
-
-	socket.send(
-		JSON.stringify({
-			messageName: 'initial-data',
-			muted: await audioControl.getMuted(),
-			volume: await audioControl.getVolume(),
-			isRobotJSInstalled: !!robot,
-		})
+	Promise.all([audioControl.getVolume(), audioControl.getMuted()]).then(
+		([volume, muted]) => {
+			socket.send(
+				JSON.stringify({
+					volume,
+					muted,
+					messageName: 'initial-data',
+					isRobotJSInstalled: !!robot,
+				})
+			);
+		}
 	);
 
 	socket.on('message', function (message) {
