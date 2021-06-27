@@ -20,6 +20,15 @@
 	let sensitivity = 25;
 	let inKeyMode = false;
 	let inMouseMode = false;
+	let inReverseMouseMode = false;
+
+	$: {
+		if (!inMouseMode) {
+			inReverseMouseMode = false;
+			prevMousePos.x = undefined;
+			prevMousePos.y = undefined;
+		}
+	}
 
 	function keyTap(key: string) {
 		return function () {
@@ -66,8 +75,8 @@
 			postData({
 				mouse: {
 					type: 'move-mouse',
-					x: -(prevMousePos.x - e.x),
-					y: -(prevMousePos.y - e.y),
+					x: (inReverseMouseMode ? 1 : -1) * (prevMousePos.x - e.x),
+					y: (inReverseMouseMode ? 1 : -1) * (prevMousePos.y - e.y),
 				},
 			});
 		}
@@ -87,19 +96,20 @@
 		}
 
 		if (e.key === 'm' && e.ctrlKey && !e.altKey) {
-			if (inMouseMode) {
-				prevMousePos.x = undefined;
-				prevMousePos.y = undefined;
-			}
-
 			inMouseMode = !inMouseMode;
-
 			return e.preventDefault();
 		}
 
 		if (e.key === 'c' && e.ctrlKey && !e.altKey) {
 			postData({ mouse: { type: 'click', button: 'left', double: false } });
 			return e.preventDefault();
+		}
+
+		if (inMouseMode) {
+			if (e.key === 'r' && !e.ctrlKey && !e.altKey) {
+				inReverseMouseMode = !inReverseMouseMode;
+				return;
+			}
 		}
 
 		if (!inKeyMode) {
