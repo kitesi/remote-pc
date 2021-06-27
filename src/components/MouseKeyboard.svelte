@@ -3,12 +3,11 @@
 	export let postData: PostData;
 
 	interface Inputs {
-		'bind-keys'?: HTMLInputElement;
-		'bind-mouse'?: HTMLInputElement;
 		drag?: HTMLInputElement;
 		ctrl?: HTMLInputElement;
 		shift?: HTMLInputElement;
 		alt?: HTMLInputElement;
+		content?: HTMLInputElement;
 	}
 
 	import MouseControls from './MouseControls.svelte';
@@ -19,7 +18,8 @@
 	const inputs: Inputs = {};
 
 	let sensitivity = 25;
-	let contentInput: HTMLInputElement;
+	let inKeyMode = false;
+	let inMouseMode = false;
 
 	function keyTap(key: string) {
 		return function () {
@@ -43,11 +43,11 @@
 				modifiers.push('alt');
 			}
 
-			if (contentInput.value) {
+			if (inputs.content.value) {
 				postData({
 					key: {
 						type,
-						content: contentInput.value,
+						content: inputs.content.value,
 						modifiers: modifiers,
 					},
 				});
@@ -58,7 +58,7 @@
 	const prevMousePos: { x?: number; y?: number } = {};
 
 	document.body.addEventListener('mousemove', (e) => {
-		if (!inputs['bind-mouse'].checked) {
+		if (!inMouseMode) {
 			return;
 		}
 
@@ -82,17 +82,17 @@
 		}
 
 		if (e.key === 'k' && e.ctrlKey && !e.altKey) {
-			inputs['bind-keys'].checked = !inputs['bind-keys'].checked;
+			inKeyMode = !inKeyMode;
 			return e.preventDefault();
 		}
 
 		if (e.key === 'm' && e.ctrlKey && !e.altKey) {
-			inputs['bind-mouse'].checked = !inputs['bind-mouse'].checked;
-
-			if (!inputs['bind-mouse'].checked) {
+			if (inMouseMode) {
 				prevMousePos.x = undefined;
 				prevMousePos.y = undefined;
 			}
+
+			inMouseMode = !inMouseMode;
 
 			return e.preventDefault();
 		}
@@ -102,7 +102,7 @@
 			return e.preventDefault();
 		}
 
-		if (!inputs['bind-keys'].checked) {
+		if (!inKeyMode) {
 			if (e.ctrlKey || e.altKey) {
 				return;
 			}
@@ -231,10 +231,10 @@
 <section id="mouse-keyboard">
 	<MouseControls {postData} />
 	<div class="modes">
-		<input type="checkbox" id="bind-mouse" bind:this={inputs['bind-mouse']} />
-		<label for="bind-mouse">Bind Mouse</label>
-		<input type="checkbox" id="bind-keys" bind:this={inputs['bind-keys']} />
-		<label for="bind-keys">Bind Keys</label>
+		<input type="checkbox" id="mouse-mode" bind:checked={inMouseMode} />
+		<label for="mouse-mode">Mouse Mode</label>
+		<input type="checkbox" id="key-mode" bind:checked={inKeyMode} />
+		<label for="key-mode">Key Mode</label>
 		<input type="checkbox" id="drag" bind:this={inputs.drag} />
 		<label for="drag">Drag</label>
 		<input type="checkbox" id="ctrl" bind:this={inputs.ctrl} />
@@ -266,7 +266,7 @@
 		<div class="text">
 			<label>
 				Text:
-				<input type="text" bind:this={contentInput} />
+				<input type="text" bind:this={inputs.content} />
 			</label>
 			<div>
 				<button on:click={baseCustomKey('tap')}>Key Tap</button>
