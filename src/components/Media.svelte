@@ -69,7 +69,7 @@
 
 <section in:fade={{ duration: 1000 }}>
 	<div class="inner-container">
-		<h1 class="volume">Volume: {$volume}</h1>
+		<h1 class="volume">VOLUME: {$volume}</h1>
 		<div class="change-volume-btns">
 			<ChangeVolumeBtn
 				on:new-interval={changeCurrentInterval}
