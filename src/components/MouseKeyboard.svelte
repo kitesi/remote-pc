@@ -12,6 +12,7 @@
 	}
 
 	import MouseControls from './MouseControls.svelte';
+	import { volume, muted } from '../stores.js';
 	import { getConfig } from '../config.js';
 
 	const { mouseSensitivity, keyShortcuts } = getConfig();
@@ -110,7 +111,17 @@
 
 			switch (e.key) {
 				case 'm':
-					key = 'audio_mute';
+					muted.set(!$muted);
+					postData({ muted: $muted });
+					break;
+				case '+':
+				case '=':
+					volume.update(1);
+					postData({ volume: $volume });
+					break;
+				case '-':
+					volume.update(-1);
+					postData({ volume: $volume });
 					break;
 				case 'Escape':
 					key = 'escape';

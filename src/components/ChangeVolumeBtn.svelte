@@ -13,18 +13,8 @@
 	const dispatch = createEventDispatcher();
 
 	function handleVolumeChange() {
-		const oldVolume = $volume;
-		let nextVolume = oldVolume + value;
-
-		if (nextVolume > 100) {
-			nextVolume = 100;
-		} else if (nextVolume < 0) {
-			nextVolume = 0;
-		}
-
-		if (oldVolume !== nextVolume) {
-			volume.set(nextVolume);
-			postData({ volume: nextVolume });
+		if (volume.update(value)) {
+			postData({ volume: $volume });
 		}
 	}
 
