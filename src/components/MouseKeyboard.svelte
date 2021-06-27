@@ -100,7 +100,7 @@
 			return e.preventDefault();
 		}
 
-		if (e.key === 'c' && e.ctrlKey && !e.altKey) {
+		if (e.key === 'c' && (e.ctrlKey || !inKeyMode) && !e.altKey) {
 			postData({ mouse: { type: 'click', button: 'left', double: false } });
 			return e.preventDefault();
 		}
@@ -242,7 +242,9 @@
 	<MouseControls {postData} />
 	<div class="modes">
 		<input type="checkbox" id="mouse-mode" bind:checked={inMouseMode} />
-		<label for="mouse-mode">Mouse Mode</label>
+		<label for="mouse-mode" class:in-reverse-mode={inReverseMouseMode}
+			>Mouse Mode</label
+		>
 		<input type="checkbox" id="key-mode" bind:checked={inKeyMode} />
 		<label for="key-mode">Key Mode</label>
 		<input type="checkbox" id="drag" bind:this={inputs.drag} />
@@ -388,6 +390,11 @@
 	input:checked + label {
 		background-color: var(--blue-3);
 		border-color: var(--blue-1);
+	}
+
+	input:checked + label.in-reverse-mode {
+		background-color: var(--red-3);
+		border-color: var(--red-4);
 	}
 
 	@media screen and (max-width: 375px) {
