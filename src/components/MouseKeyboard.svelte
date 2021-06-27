@@ -76,16 +76,16 @@
 	});
 
 	document.body.addEventListener('keydown', (e) => {
-		if (e.target !== document.body) {
+		if (e.target instanceof HTMLInputElement) {
 			return;
 		}
 
-		if (e.key === 'k' && e.ctrlKey && !e.shiftKey && !e.altKey) {
+		if (e.key === 'k' && e.ctrlKey && !e.altKey) {
 			inputs['bind-keys'].checked = !inputs['bind-keys'].checked;
 			return e.preventDefault();
 		}
 
-		if (e.key === 'm' && e.ctrlKey && !e.shiftKey && !e.altKey) {
+		if (e.key === 'm' && e.ctrlKey && !e.altKey) {
 			inputs['bind-mouse'].checked = !inputs['bind-mouse'].checked;
 
 			if (!inputs['bind-mouse'].checked) {
@@ -96,12 +96,36 @@
 			return e.preventDefault();
 		}
 
-		if (e.key === 'c' && e.ctrlKey && !e.shiftKey && !e.altKey) {
+		if (e.key === 'c' && e.ctrlKey && !e.altKey) {
 			postData({ mouse: { type: 'click', button: 'left', double: false } });
 			return e.preventDefault();
 		}
 
 		if (!inputs['bind-keys'].checked) {
+			if (e.ctrlKey || e.altKey) {
+				return;
+			}
+
+			let key: string;
+
+			switch (e.key) {
+				case 'm':
+					key = 'audio_mute';
+					break;
+				case 'Escape':
+					key = 'escape';
+					break;
+			}
+
+			if (key) {
+				postData({
+					key: {
+						type: 'tap',
+						content: key,
+					},
+				});
+			}
+
 			return;
 		}
 
