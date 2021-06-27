@@ -136,6 +136,9 @@
 				case 'Escape':
 					key = 'escape';
 					break;
+				case ' ':
+					key = 'audio_pause';
+					break;
 			}
 
 			if (key) {
