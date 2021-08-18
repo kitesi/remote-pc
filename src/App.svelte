@@ -1,43 +1,43 @@
 <script lang="ts">
-	import type { InitialData } from './types.js';
-	import Loading from './components/Loading.svelte';
-	import Media from './components/Media.svelte';
-	import MouseKeyboard from './components/MouseKeyboard.svelte';
+    import type { InitialData } from './types.js';
+    import Loading from './components/Loading.svelte';
+    import Media from './components/Media.svelte';
+    import MouseKeyboard from './components/MouseKeyboard.svelte';
 
-	const socket = new WebSocket(`ws://${window.location.host}`);
-	let initialData: InitialData;
+    const socket = new WebSocket(`ws://${window.location.host}`);
+    let initialData: InitialData;
 
-	socket.addEventListener(
-		'message',
-		function (message) {
-			initialData = JSON.parse(message.data);
-		},
-		{ once: true }
-	);
+    socket.addEventListener(
+        'message',
+        function (message) {
+            initialData = JSON.parse(message.data);
+        },
+        { once: true }
+    );
 
-	function postData(data: object) {
-		socket.send(JSON.stringify(data));
-	}
+    function postData(data: object) {
+        socket.send(JSON.stringify(data));
+    }
 </script>
 
 {#if initialData}
-	<section>
-		<Media {initialData} {socket} {postData} />
-		<MouseKeyboard {postData} />
-	</section>
+    <section>
+        <Media {initialData} {socket} {postData} />
+        <MouseKeyboard {postData} />
+    </section>
 {:else}
-	<Loading />
+    <Loading />
 {/if}
 
 <style>
-	section {
-		max-height: 100vh;
-	}
+    section {
+        max-height: 100vh;
+    }
 
-	@media screen and (min-width: 800px) {
-		section {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-		}
-	}
+    @media screen and (min-width: 800px) {
+        section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+    }
 </style>

@@ -1,78 +1,78 @@
 <script context="module" lang="ts">
-	let interval: NodeJS.Timeout;
+    let interval: NodeJS.Timeout;
 </script>
 
 <script lang="ts">
-	export let value: number;
-	export let textContent: string;
-	export let postData: (data: object) => void;
+    export let value: number;
+    export let textContent: string;
+    export let postData: (data: object) => void;
 
-	import { volume } from '../stores.js';
-	import { createEventDispatcher } from 'svelte';
+    import { volume } from '../stores.js';
+    import { createEventDispatcher } from 'svelte';
 
-	const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher();
 
-	function handleVolumeChange() {
-		if (volume.update(value)) {
-			postData({ volume: $volume });
-		}
-	}
+    function handleVolumeChange() {
+        if (volume.update(value)) {
+            postData({ volume: $volume });
+        }
+    }
 
-	function buttonHoldStart(ev: Event) {
-		if (ev.target !== document.activeElement) {
-			(ev.target as HTMLButtonElement).focus();
-		}
+    function buttonHoldStart(ev: Event) {
+        if (ev.target !== document.activeElement) {
+            (ev.target as HTMLButtonElement).focus();
+        }
 
-		// if you press two volume buttons at the same time,
-		// one might be able to skip the race and not be cleared
-		if (interval) {
-			clearInterval(interval);
-		}
+        // if you press two volume buttons at the same time,
+        // one might be able to skip the race and not be cleared
+        if (interval) {
+            clearInterval(interval);
+        }
 
-		interval = setInterval(handleVolumeChange, 200);
+        interval = setInterval(handleVolumeChange, 200);
 
-		dispatch('new-interval', { value: interval, type: ev.type });
-	}
+        dispatch('new-interval', { value: interval, type: ev.type });
+    }
 
-	function buttonHoldFinish() {
-		if (interval) {
-			clearInterval(interval);
-			interval = undefined;
-		}
-	}
+    function buttonHoldFinish() {
+        if (interval) {
+            clearInterval(interval);
+            interval = undefined;
+        }
+    }
 </script>
 
 <button
-	class={value >= 0 ? 'green' : 'red'}
-	on:click={handleVolumeChange}
-	on:mousedown={buttonHoldStart}
-	on:touchstart={buttonHoldStart}
-	on:touchend={buttonHoldFinish}
-	on:touchcancel={buttonHoldFinish}
+    class={value >= 0 ? 'green' : 'red'}
+    on:click={handleVolumeChange}
+    on:mousedown={buttonHoldStart}
+    on:touchstart={buttonHoldStart}
+    on:touchend={buttonHoldFinish}
+    on:touchcancel={buttonHoldFinish}
 >
-	{textContent}
+    {textContent}
 </button>
 
 <style>
-	button {
-		font-size: 30px;
-		padding: 10px 0;
-		border-bottom: 4px solid transparent;
-		border-radius: 3px;
-	}
+    button {
+        font-size: 30px;
+        padding: 10px 0;
+        border-bottom: 4px solid transparent;
+        border-radius: 3px;
+    }
 
-	button:focus {
-		outline: 2px solid white;
-		border-radius: 0;
-	}
+    button:focus {
+        outline: 2px solid white;
+        border-radius: 0;
+    }
 
-	.green {
-		background-color: var(--green-1);
-		border-bottom-color: var(--green-2);
-	}
+    .green {
+        background-color: var(--green-1);
+        border-bottom-color: var(--green-2);
+    }
 
-	.red {
-		background-color: var(--red-1);
-		border-bottom-color: var(--red-4);
-	}
+    .red {
+        background-color: var(--red-1);
+        border-bottom-color: var(--red-4);
+    }
 </style>

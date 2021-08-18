@@ -3,15 +3,15 @@
 // import { readFile } from 'fs/promises';
 
 interface Config {
-	keyShortcuts: {
-		text: string;
-		key: string;
-	}[];
-	mouseSensitivity: {
-		max: number;
-		min: number;
-		step: number;
-	};
+    keyShortcuts: {
+        text: string;
+        key: string;
+    }[];
+    mouseSensitivity: {
+        max: number;
+        min: number;
+        step: number;
+    };
 }
 
 // const homedir = os.homedir();
@@ -29,38 +29,38 @@ interface Config {
 // }
 
 export function getConfig(): Config {
-	return {
-		keyShortcuts: [
-			{
-				key: 'enter',
-				text: 'Enter',
-			},
-			{
-				key: 'escape',
-				text: 'Escape',
-			},
-			{
-				key: 'backspace',
-				text: 'Backspace',
-			},
-			{
-				key: 'tab',
-				text: 'Tab',
-			},
-			{
-				key: 'left',
-				text: '←',
-			},
-			{
-				key: 'right',
-				text: '→',
-			},
-		],
-		mouseSensitivity: {
-			min: 10,
-			max: 30,
-			step: 2,
-		},
-	};
-	// return JSON.parse(readFile(configPath, 'utf-8'));
+    return {
+        keyShortcuts: [
+            {
+                key: 'enter',
+                text: 'Enter',
+            },
+            {
+                key: 'escape',
+                text: 'Escape',
+            },
+            {
+                key: 'backspace',
+                text: 'Backspace',
+            },
+            {
+                key: 'tab',
+                text: 'Tab',
+            },
+            {
+                key: 'left',
+                text: '←',
+            },
+            {
+                key: 'right',
+                text: '→',
+            },
+        ],
+        mouseSensitivity: {
+            min: 10,
+            max: 30,
+            step: 2,
+        },
+    };
+    // return JSON.parse(readFile(configPath, 'utf-8'));
 }
