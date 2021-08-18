@@ -58,7 +58,7 @@ export function getConfig(): Config {
         ],
         mouseSensitivity: {
             min: 10,
-            max: 30,
+            max: 80,
             step: 2,
         },
     };

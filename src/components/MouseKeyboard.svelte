@@ -244,6 +244,19 @@
 </script>
 
 <section id="mouse-keyboard">
+    <div class="sensitivity-container">
+        <label class="sensitivity-label" for="sensitivity">
+            Sensitivity: {sensitivity}
+        </label>
+        <input
+            id="sensitivity"
+            type="range"
+            min={mouseSensitivity.min}
+            max={mouseSensitivity.max}
+            step={mouseSensitivity.step}
+            bind:value={sensitivity}
+        />
+    </div>
     <MouseControls {postData} />
     <div class="modes">
         <input type="checkbox" id="mouse-mode" bind:checked={inMouseMode} />
@@ -267,19 +280,6 @@
         {/each}
     </div>
     <div class="other">
-        <div>
-            <label class="sensitivity-label">
-                Sensitivity: {sensitivity}
-                <input
-                    id="sensitivity"
-                    type="range"
-                    min={mouseSensitivity.min}
-                    max={mouseSensitivity.max}
-                    step={mouseSensitivity.step}
-                    bind:value={sensitivity}
-                />
-            </label>
-        </div>
         <div class="text">
             <label>
                 Text:
@@ -300,19 +300,14 @@
         flex-wrap: wrap;
         gap: 10px;
         justify-content: center;
-        /* padding: 20px; */
-        /* align-items: flex-start; */
-        /* align-content: flex-start; */
     }
 
     .modes {
         padding: 0 10px;
-        grid-area: modes;
     }
 
     .keys {
         padding: 10px 10px 20px 10px;
-        grid-area: key-shortcuts;
     }
 
     .other {
@@ -320,8 +315,18 @@
         flex-direction: column;
         align-items: center;
         gap: 10px;
-        grid-area: other;
         padding: 0 20px 20px 20px;
+    }
+
+    .sensitivity-container {
+        display: flex;
+        justify-content: space-around;
+        background-color: var(--black-3);
+        padding: 10px;
+    }
+
+    .sensitivity-container label {
+        font-size: 24px;
     }
 
     .other label,
@@ -330,7 +335,8 @@
         font-size: 24px;
     }
 
-    .other input {
+    .other input,
+    .sensitivity-container input {
         width: 200px;
     }
 
@@ -349,18 +355,6 @@
         border: none;
         padding: 10px;
         margin: 10px 0;
-    }
-
-    section {
-        display: grid;
-        align-content: flex-start;
-        grid-template-areas: 'mouse' 'modes' 'key-shortcuts' 'other';
-        /* grid-template-columns: 1fr 1fr;
-		grid-template-rows: 1fr 1fr;
-		grid-template-areas:
-			'mouse modes'
-			'key-shortcuts other'; */
-        background-color: var(--black-2);
     }
 
     .modes label,
@@ -386,6 +380,11 @@
     .text button {
         background-color: var(--blue-1);
         border-bottom-color: var(--blue-2);
+    }
+
+    section {
+        background-color: var(--black-2);
+        width: 100%;
     }
 
     input[type='checkbox'] {
