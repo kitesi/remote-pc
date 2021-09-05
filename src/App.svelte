@@ -4,8 +4,18 @@
     import Media from './components/Media.svelte';
     import MouseKeyboard from './components/MouseKeyboard.svelte';
 
-    const socket = new WebSocket(`ws://${window.location.host}`);
+    let socket: WebSocket;
     let initialData: InitialData;
+
+    function connect() {
+        socket = new WebSocket(`ws://${window.location.host}`);
+
+        socket.addEventListener('close', () => {
+            setTimeout(connect, 1000);
+        });
+    }
+
+    connect();
 
     socket.addEventListener(
         'message',
