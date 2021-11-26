@@ -48,7 +48,7 @@ async function setMuted(muted) {
 }
 
 async function getVolume() {
-    if (process.platform === 'linux') {
+    if (process.platform !== 'linux') {
         return loudness.getVolume();
     }
 
@@ -60,7 +60,7 @@ async function getVolume() {
 }
 
 async function getMuted() {
-    if (process.platform === 'linux') {
+    if (process.platform !== 'linux') {
         return loudness.getMuted();
     }
 
