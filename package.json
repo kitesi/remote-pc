@@ -2,6 +2,9 @@
     "name": "svelte-app",
     "version": "1.0.0",
     "private": true,
+    "bin": {
+        "remote-pc": "server.js"
+    },
     "scripts": {
         "build": "rollup -c",
         "dev": "rollup -c -w",

@@ -1,9 +1,11 @@
+#!/usr/bin/env node
 // @ts-check
 import WebSocket from 'ws';
 import express from 'express';
 
 import http from 'http';
 import path from 'path';
+import os from 'os';
 import { fileURLToPath } from 'url';
 
 import { getMuted, getVolume, setMuted, setVolume } from './controller.js';
@@ -22,7 +24,25 @@ try {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-server.listen(port, () => console.log('ready at localhost:' + port));
+const networkInterfaces = os.networkInterfaces();
+let ip = '';
+
+// mainly copied from https://github.com/vercel/serve
+for (const networkInterface of Object.values(networkInterfaces)) {
+    for (const network of networkInterface) {
+        const { address, family, internal } = network;
+
+        if (family === 'IPv4' && !internal) {
+            ip = address;
+            break;
+        }
+    }
+}
+
+server.listen(port, () => {
+    console.log('ready at localhost:' + port);
+    console.log(`visit on another device @ http://${ip}:${port}`);
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 /**
