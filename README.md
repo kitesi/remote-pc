@@ -21,7 +21,20 @@ is more advanced and allows for connections between different networks.
 
 # Installation
 
-TODO
+Might need some [requirements for robotjs](https://github.com/octalmage/robotjs/#building)
+
+Compile it yourself for now:
+
+```bash
+git clone https://github.com/karizma/remote-pc.git
+cd remote-pc
+pnpm i
+npm link
+```
+
+then just run it with `remote-pc`
+
+If you need help, create an issue.
 
 # Usage
 
