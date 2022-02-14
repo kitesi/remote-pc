@@ -19,9 +19,14 @@ const port = 8080;
 let robot;
 
 try {
-    robot = require('robotjs');
-} catch (e) {}
+    // @ts-ignore
+    robot = (await import('robotjs')).default;
+    console.log(robot);
+} catch (e) {
+    console.error(e);
+}
 
+// @ts-ignore
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const networkInterfaces = os.networkInterfaces();
