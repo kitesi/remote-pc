@@ -70,10 +70,10 @@ you might aswell just connect it to the host pc instead.
 <!-- prettier-ignore -->
 - `ctrl+k` toggle key mode
 - `ctrl+m` toggle mouse mode
-- `r` toggle reverse mouse mode when in mouse mode
-- `c` to click when key mode is not enabled
+  - `r` toggle reverse mouse mode 
 - `ctrl+c` click regardless of mode
 - when key mode is off
+  - `c` to click 
   - `m` mute volume
   - `+` or `=` increase audio
   - `-` decrease audio

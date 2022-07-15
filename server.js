@@ -21,7 +21,6 @@ let robot;
 try {
     // @ts-ignore
     robot = (await import('robotjs')).default;
-    console.log(robot);
 } catch (e) {
     console.error(e);
 }
