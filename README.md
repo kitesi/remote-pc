@@ -8,7 +8,7 @@ would be way better.
 You might be interested in [rustdesk](https://github.com/rustdesk/rustdesk) which
 is more advanced and allows for connections between different networks.
 
-# Features
+## Features
 
 <!-- prettier-ignore -->
 - Pause/Play
@@ -19,7 +19,11 @@ is more advanced and allows for connections between different networks.
 - Mouse Mode (your mouse movements are mirrored on the host pc)
 - Key Mode (your keys are mirrored on the host pc)
 
-# Installation
+## Preview
+
+![Medium screen size preview](assets/medium-ss.png)
+
+## Installation
 
 Might need some [requirements for robotjs](https://github.com/octalmage/robotjs/#building)
 
@@ -36,7 +40,7 @@ then just run it with `remote-pc`
 
 If you need help, create an issue.
 
-# Usage
+## Usage
 
 If you plan to only use a mobile device without a physical keyboard (phones, tablets, etc..),
 then the UI is pretty self explainatory, and you can stop reading this section.
@@ -65,7 +69,7 @@ keyboard event, and instead just close.
 I guess you could use a bluetooth keyboard or mouse on your mobile device, but
 you might aswell just connect it to the host pc instead.
 
-## Keyboard Shortcuts
+### Keyboard Shortcuts
 
 <!-- prettier-ignore -->
 - `ctrl+k` toggle key mode
@@ -80,6 +84,6 @@ you might aswell just connect it to the host pc instead.
   - `<Space>` audio pause
   - `<Escape>` press escape on host pc
 
-# Configuration
+## Configuration
 
 TODO
