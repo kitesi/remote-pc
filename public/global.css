@@ -1,47 +1,54 @@
 * {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url('/fonts/CascadiaCode.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
 
 :root {
-	--font: 'Cascadia Code', 'Cascadia Mono', sans-serif;
-	--black-1: #161a20;
-	--black-2: #1c2027;
-	--black-3: #262e36;
-	--blue-1: #2a4769;
-	--blue-2: #163457;
-	--blue-3: #436081;
-	--purple-1: #72658f;
-	--purple-2: #554777;
-	--green-1: #239492;
-	--green-2: #0a5250;
-	--red-1: #d47560;
-	--red-2: #b46868;
-	--red-3: #b15d5d;
-	--red-4: #963f3f;
+    --font: 'Cascadia Code', 'Cascadia Mono', sans-serif;
+    --black-1: #161a20;
+    --black-2: #1c2027;
+    --black-3: #262e36;
+    --blue-1: #2a4769;
+    --blue-2: #163457;
+    --blue-3: #436081;
+    --purple-1: #72658f;
+    --purple-2: #554777;
+    --green-1: #239492;
+    --green-2: #0a5250;
+    --red-1: #d47560;
+    --red-2: #b46868;
+    --red-3: #b15d5d;
+    --red-4: #963f3f;
 }
 
 body {
-	font-family: var(--font);
-	background-color: var(--black-1);
-	color: white;
+    font-family: var(--font);
+    background-color: var(--black-1);
+    color: white;
 }
 
 h1 {
-	box-sizing: border-box;
-	font-weight: 200;
-	padding: 20px;
-	border-radius: 5px;
+    box-sizing: border-box;
+    font-weight: 200;
+    padding: 20px;
+    border-radius: 5px;
 }
 
 button {
-	color: white;
-	font-family: var(--font);
-	border-radius: 5px;
-	cursor: pointer;
-	border: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+    color: white;
+    font-family: var(--font);
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
