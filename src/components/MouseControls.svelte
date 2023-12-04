@@ -56,7 +56,10 @@
     ];
 
     function emulateClick() {
-        postData({ mouse: { type: 'click', button: 'left', double: false } });
+        postData({
+            event: 'mouse',
+            mouse: { type: 'click', button: 'left', double: false },
+        });
     }
 </script>
 

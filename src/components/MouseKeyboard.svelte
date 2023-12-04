@@ -32,7 +32,10 @@
 
     function keyTap(key: string) {
         return function () {
-            postData({ key: { type: 'tap', content: key } });
+            postData({
+                event: 'keypress',
+                key: { type: 'tap', content: key },
+            });
         };
     }
 
@@ -54,6 +57,7 @@
 
             if (inputs.content.value) {
                 postData({
+                    event: 'keypress',
                     key: {
                         type,
                         content: inputs.content.value,
@@ -73,8 +77,9 @@
 
         if (typeof prevMousePos.x !== 'undefined') {
             postData({
+                event: 'mouse',
                 mouse: {
-                    type: 'move-mouse',
+                    type: 'move',
                     x: (inReverseMouseMode ? 1 : -1) * (prevMousePos.x - e.x),
                     y: (inReverseMouseMode ? 1 : -1) * (prevMousePos.y - e.y),
                 },
@@ -102,6 +107,7 @@
 
         if (e.key === 'c' && (e.ctrlKey || !inKeyMode) && !e.altKey) {
             postData({
+                event: 'mouse',
                 mouse: { type: 'click', button: 'left', double: false },
             });
             return e.preventDefault();
@@ -124,16 +130,16 @@
             switch (e.key) {
                 case 'm':
                     muted.set(!$muted);
-                    postData({ muted: $muted });
+                    postData({ event: 'mute-change', muted: $muted });
                     break;
                 case '+':
                 case '=':
                     volume.update(1);
-                    postData({ volume: $volume });
+                    postData({ event: 'volume-change', volume: $volume });
                     break;
                 case '-':
                     volume.update(-1);
-                    postData({ volume: $volume });
+                    postData({ event: 'volume-change', volume: $volume });
                     break;
                 case 'Escape':
                     key = 'escape';
@@ -145,6 +151,7 @@
 
             if (key) {
                 postData({
+                    event: 'keypress',
                     key: {
                         type: 'tap',
                         content: key,
@@ -234,6 +241,7 @@
         }
 
         postData({
+            event: 'keypress',
             key: {
                 type: 'tap',
                 content: key,

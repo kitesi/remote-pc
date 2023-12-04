@@ -23,10 +23,11 @@
 
     function changeMousePos() {
         const dragInput = document.getElementById('drag') as HTMLInputElement;
-        const type = dragInput.checked ? 'drag-mouse' : 'move-mouse';
+        const type = dragInput.checked ? 'drag' : 'move';
         const amplifier = interval.sensitivity || getSensitivity();
 
         postData({
+            event: 'mouse',
             mouse: {
                 x: x * amplifier,
                 y: y * amplifier,

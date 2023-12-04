@@ -14,7 +14,7 @@
 
     function handleVolumeChange() {
         if (volume.update(value)) {
-            postData({ volume: $volume });
+            postData({ event: 'volume-change', volume: $volume });
         }
     }
 

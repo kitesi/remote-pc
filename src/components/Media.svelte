@@ -21,9 +21,11 @@
     socket.addEventListener('message', function (message) {
         const data = JSON.parse(message.data);
 
-        if (data.muted !== $muted) {
+        if (typeof data.muted !== 'undefined' && data.muted !== muted) {
             muted.set(data.muted);
-        } else {
+        }
+
+        if (typeof data.volume !== 'undefined' && data.volume !== $volume) {
             volume.set(data.volume);
         }
     });
@@ -31,6 +33,7 @@
     function sendKey(key: string) {
         return function () {
             postData({
+                event: 'keypress',
                 key: {
                     type: 'tap',
                     content: key,
@@ -41,7 +44,7 @@
 
     function toggleMute() {
         muted.set(!$muted);
-        postData({ muted: $muted });
+        postData({ event: 'mute-change', muted: $muted });
     }
 
     function changeCurrentInterval(ev: SvelteEvent) {
@@ -68,7 +71,8 @@
 <svelte:body
     on:mouseout={removeCurrentInterval}
     on:mouseup={removeCurrentInterval}
-    on:mouseleave={removeCurrentInterval} />
+    on:mouseleave={removeCurrentInterval}
+/>
 
 <section in:fade={{ duration: 1000 }}>
     <div class="inner-container">
@@ -101,7 +105,7 @@
             <button on:click={toggleMute}>
                 <ion-icon name={$muted ? 'volume-mute' : 'volume-high'} />
             </button>
-            {#if initialData.isRobotJSInstalled}
+            {#if initialData.canControlKeyboardAndMouse}
                 <button on:click={sendKey('audio_prev')}>
                     <ion-icon name="play-skip-back-circle" />
                 </button>

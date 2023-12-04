@@ -8,7 +8,7 @@
     let initialData: InitialData;
 
     function connect() {
-        socket = new WebSocket(`ws://${window.location.host}`);
+        socket = new WebSocket(`ws://${window.location.host}/ws`);
 
         socket.addEventListener('close', () => {
             setTimeout(connect, 1000);

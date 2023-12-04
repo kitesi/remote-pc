@@ -8,7 +8,7 @@
     "scripts": {
         "build": "rollup -c",
         "dev": "rollup -c -w",
-        "start": "node server",
+        "start": "serve public",
         "check": "svelte-check --tsconfig ./tsconfig.json",
         "pretty": "npx prettier --write src/** --plugin-search-dir=. ./**/*.html"
     },
@@ -34,8 +34,6 @@
     "dependencies": {
         "execa": "^6.0.0",
         "express": "^4.17.1",
-        "loudness": "^0.4.1",
-        "robotjs": "^0.6.0",
         "ws": "^7.5.0"
     }
 }

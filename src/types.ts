@@ -1,14 +1,15 @@
 export interface InitialData {
     volume: number;
     muted: boolean;
-    isRobotJSInstalled: boolean;
+    canControlKeyboardAndMouse: boolean;
 }
 
 export interface PostDataOptions {
+    event: 'mouse' | 'keypress' | 'volume-change' | 'mute-change';
     volume?: number;
     muted?: boolean;
     mouse?: {
-        type: 'click' | 'drag-mouse' | 'move-mouse';
+        type: 'click' | 'drag' | 'move';
         button?: 'left' | 'right';
         double?: boolean;
         x?: number;

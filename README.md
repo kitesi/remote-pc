@@ -1,9 +1,8 @@
 # Remote PC
 
-This is a nodejs + svelte based application to control your computer from another
+This is a go + svelte based application to control your computer from another
 device. This is intended only for simple media, mouse and keyboard control.
-You must also be on the same network as the host. Overall a wireless mouse and keyboard
-would be way better.
+You must also be on the same network as the host. Overall a wireless mouse and keyboard would be way better.
 
 You might be interested in [rustdesk](https://github.com/rustdesk/rustdesk) which
 is more advanced and allows for connections between different networks.
@@ -25,18 +24,16 @@ is more advanced and allows for connections between different networks.
 
 ## Installation
 
-Might need some [requirements for robotjs](https://github.com/octalmage/robotjs/#building)
+This project used [robotgo](https://github.com/go-vgo/robotgo) which has some requirements/dependencies.
 
-Compile it yourself for now:
+For now you will need to compile it yourself:
 
 ```bash
 git clone https://github.com/karizma/remote-pc.git
-cd remote-pc
-pnpm i
-npm link
+npm install
+npm run build
+go run server.go
 ```
-
-then just run it with `remote-pc`
 
 If you need help, create an issue.
 
