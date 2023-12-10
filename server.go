@@ -75,7 +75,7 @@ func reader(conn *websocket.Conn) error {
 				robotgo.MoveRelative(data.Mouse.X, data.Mouse.Y)
 				robotgo.Toggle("left", "up")
 			}
-		} else if data.Event == "key" {
+		} else if data.Event == "keypress" {
 			switch data.Key.Type {
 			case "tap":
 				robotgo.KeyTap(data.Key.Content, data.Key.Modifiers)
