@@ -8,15 +8,10 @@
     import ChangeVolumeBtn from './ChangeVolumeBtn.svelte';
 
     import { fade } from 'svelte/transition';
-    import { volume, muted } from '../stores.js';
+    import { volume, muted, currentInterval } from '../stores.js';
 
     volume.set(initialData.volume);
     muted.set(initialData.muted);
-
-    const currentInterval: {
-        type?: string;
-        value?: number;
-    } = {};
 
     socket.addEventListener('message', function (message) {
         const data = JSON.parse(message.data);
@@ -47,23 +42,18 @@
         postData({ event: 'mute-change', muted: $muted });
     }
 
-    function changeCurrentInterval(ev: SvelteEvent) {
-        Object.assign(currentInterval, ev.detail);
-    }
-
     function removeCurrentInterval(ev: SvelteEvent) {
         // if its a touch don't stop because of mousedown, mouseup, or mouseleave
         if (
             ev.type.startsWith('mouse') &&
-            currentInterval.type !== 'mousedown'
+            $currentInterval.type !== 'mousedown'
         ) {
             return;
         }
 
-        if (currentInterval.value) {
-            clearInterval(currentInterval.value);
-            currentInterval.value = undefined;
-            currentInterval.type = undefined;
+        if ($currentInterval.value) {
+            clearInterval($currentInterval.value);
+            currentInterval.set({ value: 0, type: '' });
         }
     }
 </script>
@@ -79,27 +69,15 @@
         <h1 class="volume">VOLUME: {$volume}</h1>
         <div class="change-volume-btns">
             <ChangeVolumeBtn
-                on:new-interval={changeCurrentInterval}
                 textContent="+"
                 value={1}
                 {postData}
             /><ChangeVolumeBtn
-                on:new-interval={changeCurrentInterval}
                 textContent="-"
                 value={-1}
                 {postData}
-            /><ChangeVolumeBtn
-                on:new-interval={changeCurrentInterval}
-                textContent="+5"
-                value={5}
-                {postData}
-            />
-            <ChangeVolumeBtn
-                on:new-interval={changeCurrentInterval}
-                textContent="-5"
-                value={-5}
-                {postData}
-            />
+            /><ChangeVolumeBtn textContent="+5" value={5} {postData} />
+            <ChangeVolumeBtn textContent="-5" value={-5} {postData} />
         </div>
         <div class="media-buttons">
             <button on:click={toggleMute}>

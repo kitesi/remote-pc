@@ -1,16 +1,9 @@
-<script context="module" lang="ts">
-    let interval: NodeJS.Timeout;
-</script>
-
 <script lang="ts">
     export let value: number;
     export let textContent: string;
     export let postData: (data: object) => void;
 
-    import { volume } from '../stores.js';
-    import { createEventDispatcher } from 'svelte';
-
-    const dispatch = createEventDispatcher();
+    import { volume, currentInterval } from '../stores.js';
 
     function handleVolumeChange() {
         if (volume.update(value)) {
@@ -25,19 +18,18 @@
 
         // if you press two volume buttons at the same time,
         // one might be able to skip the race and not be cleared
-        if (interval) {
-            clearInterval(interval);
+        if ($currentInterval.value) {
+            clearInterval($currentInterval.value);
         }
 
-        interval = setInterval(handleVolumeChange, 200);
-
-        dispatch('new-interval', { value: interval, type: ev.type });
+        $currentInterval.value = setInterval(handleVolumeChange, 200);
+        $currentInterval.type = ev.type.includes('mouse') ? 'mouse' : 'touch';
     }
 
     function buttonHoldFinish() {
-        if (interval) {
-            clearInterval(interval);
-            interval = undefined;
+        if ($currentInterval.value) {
+            clearInterval($currentInterval.value);
+            currentInterval.set({ value: 0, type: '' });
         }
     }
 </script>

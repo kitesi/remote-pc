@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { PostData } from '../types';
+    import { currentInterval } from '../stores.js';
 
     export let postData: PostData;
     export let name: string;
@@ -7,12 +8,7 @@
     export let x: number;
     export let y: number;
 
-    interface OwnInterval {
-        sensitivity?: number;
-        value?: NodeJS.Timeout;
-    }
-
-    const interval: OwnInterval = {};
+    let currentSensitivity = 0;
 
     function getSensitivity() {
         const input = document.getElementById(
@@ -24,7 +20,7 @@
     function changeMousePos() {
         const dragInput = document.getElementById('drag') as HTMLInputElement;
         const type = dragInput.checked ? 'drag' : 'move';
-        const amplifier = interval.sensitivity || getSensitivity();
+        const amplifier = currentSensitivity || getSensitivity();
 
         postData({
             event: 'mouse',
@@ -37,22 +33,25 @@
     }
 
     function continuouslyChangeMousePos() {
-        interval.sensitivity += 2;
+        currentSensitivity += 2;
         changeMousePos();
     }
 
-    function touchStart(ev: Event) {
+    function buttonHoldStart(ev: Event) {
         if (ev.target !== document.activeElement) {
             (ev.target as HTMLButtonElement).focus();
         }
 
-        interval.sensitivity = getSensitivity();
-        interval.value = setInterval(continuouslyChangeMousePos, 200);
+        currentSensitivity = getSensitivity();
+        $currentInterval.type = ev.type.includes('mouse') ? 'mouse' : 'touch';
+        $currentInterval.value = setInterval(continuouslyChangeMousePos, 200);
     }
 
-    function touchFinish() {
-        clearInterval(interval.value);
-        interval.sensitivity = undefined;
+    function buttonHoldFinish() {
+        if ($currentInterval.value) {
+            clearInterval($currentInterval.value);
+            currentInterval.set({ value: 0, type: '' });
+        }
     }
 </script>
 
@@ -60,9 +59,10 @@
     style="grid-area: {name}"
     class:double-mouse-change={name.includes('-')}
     on:click={changeMousePos}
-    on:touchstart={touchStart}
-    on:touchend={touchFinish}
-    on:touchcancel={touchFinish}
+    on:mousedown={buttonHoldStart}
+    on:touchstart={buttonHoldStart}
+    on:touchend={buttonHoldFinish}
+    on:touchcancel={buttonHoldFinish}
 >
     {textContent}
 </button>

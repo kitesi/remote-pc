@@ -9,8 +9,7 @@ function createVolumeStore() {
         set: store.set,
         /** @param {number} change */
         update(change) {
-            /** @type {boolean} */
-            let hasChanged;
+            let hasChanged = false;
 
             store.update((oldValue) => {
                 if (oldValue + change > 100) {
@@ -31,6 +30,11 @@ function createVolumeStore() {
         },
     };
 }
+
+export const currentInterval = writable({
+    type: '',
+    value: setTimeout(() => {}, 0),
+});
 
 export const volume = createVolumeStore();
 export const muted = writable(false);
