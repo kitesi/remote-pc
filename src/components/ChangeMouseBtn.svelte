@@ -19,7 +19,18 @@
 
     function changeMousePos() {
         const dragInput = document.getElementById('drag') as HTMLInputElement;
-        const type = dragInput.checked ? 'drag' : 'move';
+        const scrollInput = document.getElementById(
+            'scroll'
+        ) as HTMLInputElement;
+
+        let type: 'move' | 'drag' | 'scroll' = 'move';
+
+        if (dragInput.checked) {
+            type = 'drag';
+        } else if (scrollInput.checked) {
+            type = 'scroll';
+        }
+
         const amplifier = currentSensitivity || getSensitivity();
 
         postData({
@@ -50,8 +61,8 @@
     function buttonHoldFinish() {
         if ($currentInterval.value) {
             clearInterval($currentInterval.value);
-            currentInterval.set({ value: 0, type: '' });
         }
+        currentInterval.set({ value: 0, type: '' });
     }
 </script>
 

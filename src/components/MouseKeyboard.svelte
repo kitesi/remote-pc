@@ -4,6 +4,7 @@
 
     interface Inputs {
         drag?: HTMLInputElement;
+        scroll?: HTMLInputElement;
         ctrl?: HTMLInputElement;
         shift?: HTMLInputElement;
         alt?: HTMLInputElement;
@@ -275,6 +276,8 @@
         <label for="key-mode">Key Mode</label>
         <input type="checkbox" id="drag" bind:this={inputs.drag} />
         <label for="drag">Drag</label>
+        <input type="checkbox" id="scroll" bind:this={inputs.scroll} />
+        <label for="scroll">Scroll</label>
         <input type="checkbox" id="ctrl" bind:this={inputs.ctrl} />
         <label for="ctrl">Ctrl</label>
         <input type="checkbox" id="shift" bind:this={inputs.shift} />

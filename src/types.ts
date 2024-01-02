@@ -9,7 +9,7 @@ export interface PostDataOptions {
     volume?: number;
     muted?: boolean;
     mouse?: {
-        type: 'click' | 'drag' | 'move';
+        type: 'click' | 'drag' | 'move' | 'scroll';
         button?: 'left' | 'right';
         double?: boolean;
         x?: number;

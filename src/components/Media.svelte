@@ -44,10 +44,7 @@
 
     function removeCurrentInterval(ev: SvelteEvent) {
         // if its a touch don't stop because of mousedown, mouseup, or mouseleave
-        if (
-            ev.type.startsWith('mouse') &&
-            $currentInterval.type !== 'mousedown'
-        ) {
+        if (ev.type.startsWith('mouse') && $currentInterval.type !== 'mouse') {
             return;
         }
 
@@ -62,6 +59,8 @@
     on:mouseout={removeCurrentInterval}
     on:mouseup={removeCurrentInterval}
     on:mouseleave={removeCurrentInterval}
+    on:touchend={removeCurrentInterval}
+    on:touchcancel={removeCurrentInterval}
 />
 
 <section in:fade={{ duration: 1000 }}>

@@ -74,6 +74,9 @@ func reader(conn *websocket.Conn) error {
 				robotgo.Toggle("left")
 				robotgo.MoveRelative(data.Mouse.X, data.Mouse.Y)
 				robotgo.Toggle("left", "up")
+			case "scroll":
+				// Scroll() parameter numbers are very small for some reason
+				robotgo.Scroll(data.Mouse.X/24, -data.Mouse.Y/24)
 			}
 		} else if data.Event == "keypress" {
 			switch data.Key.Type {
